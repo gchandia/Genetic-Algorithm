@@ -1,12 +1,12 @@
-package bitSequence;
+package wordSequence;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class NBitSequence {
+public class WordSequence {
   private int totalGenerations = 1;
   
-  private int compareSequences(int[] a, int[] b) {
+  private int compareSequences(char[] a, char[] b) {
     int counter = 0;
     
     for (int i = 0; i < a.length; i++) {
@@ -48,14 +48,14 @@ public class NBitSequence {
     return sorted;
   }
   
-  private void mutate(int[] sequence, int index, int mutationRate) {
+  private void mutate(char[] sequence, int index, int mutationRate) {
     Random random = new Random();
     int randomTo100 = random.nextInt(101);
-    if (randomTo100 <= mutationRate) {sequence[index] = sequence[index] == 0? 1:0;}
+    if (randomTo100 <= mutationRate) {sequence[index] = Member.randomLetter();}
   }
   
   private Member crossOver(Member dad, Member mom, int mutationRate) {
-    int[] son = new int[dad.getSequence().length];
+    char[] son = new char[dad.getSequence().length];
     int cut = dad.getSequence().length * 3 / 5;
     
     for (int i = 0; i <= cut; i++) {
@@ -78,7 +78,7 @@ public class NBitSequence {
     return population;
   }
   
-  public boolean evaluateFitness(Member[] population, int[] sequence) {
+  public boolean evaluateFitness(Member[] population, char[] sequence) {
     boolean sequenceFound = false;
     
     for (int i = 0; i < population.length; i++) {
@@ -127,7 +127,7 @@ public class NBitSequence {
     return breed;
   }
   
-  public void geneticAlgorithm(int N, int[] sequence, int length, Member[] initialPopulation) {
+  public void geneticAlgorithm(int N, char[] sequence, int length, Member[] initialPopulation) {
     Member[] population;
     if (initialPopulation == null) population = initiatePopulation(N, length);
     else population = initialPopulation;
@@ -147,8 +147,8 @@ public class NBitSequence {
   }
   
   public static void main(String[] args) {
-    NBitSequence gene = new NBitSequence();
-    int[] example = {1, 1, 1, 0, 0, 1, 1, 0, 1};
+    WordSequence gene = new WordSequence();
+    char[] example = {'p', 'e', 'r', 'r', 'o'};
     
     long startTime = System.currentTimeMillis();
     gene.geneticAlgorithm(10, example, example.length, null);
